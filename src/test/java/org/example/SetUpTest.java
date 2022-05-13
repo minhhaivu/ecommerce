@@ -11,12 +11,20 @@ import static org.testng.AssertJUnit.assertEquals;
 public class SetUpTest {
     @Test
     public void testSetup() {
-        String chromeHome = System.getenv("CHROME_HOME");
+        String url = "http://www.google.com";
+        String chromeBinary = System.getenv("CHROME_BINARY");
+        String chromeDriver = System.getenv("CHROME_DRIVER");
+        String chromeVersion = System.getenv("CHROME_VERSION");
         ChromeOptions options = new ChromeOptions();
-        options.setBinary(chromeHome + "\\chrome.exe");
-        System.setProperty("webdriver.chrome.driver", chromeHome + "\\chromedriver.exe");
+        options.setBinary(chromeBinary);
+        System.setProperty("webdriver.chrome.driver", chromeDriver);
         WebDriver driver = new ChromeDriver(options);
-        driver.get("http://www.google.com");
+        driver.get(url);
+        System.out.println("--------------Logging---------------");
+        System.out.println("URL: " + url);
+        System.out.println("Chrome version: " + chromeVersion);
+        System.out.println("Chrome binary directory: " + chromeBinary);
+        System.out.println("Chrome driver directory: " + chromeDriver);
         assertEquals("Google", driver.getTitle());
         driver.close();
     }
