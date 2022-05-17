@@ -18,6 +18,7 @@ public class SignInValidation {
     public void checkAccountName(Account myAccount) {
         Assert.assertEquals(myAccountPage.getAccount().getText(), myAccount.getFirstName() + " " + myAccount.getLastName());
     }
+
     public void checkSignInSuccess(Account myAccount) {
         checkMyAccountTitle();
         checkSignOutButtonExist();
