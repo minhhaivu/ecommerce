@@ -15,7 +15,7 @@ public class SearchPage extends AbstractPage {
     private List<WebElement> productList;
 
     @FindBy(className = "heading-counter")
-    private WebElement searchResultCountLbl;
+    private WebElement searchResultCounterLbl;
 
     private WebElement productLocator(Product product) {
         return pageDriver.findElement(By.xpath("//div[@class='product-container' and .//a[contains(text(),'"
@@ -31,8 +31,21 @@ public class SearchPage extends AbstractPage {
         super();
     }
 
-    public String getSearchResultCountMsg() {
-        return searchResultCountLbl.getText();
+    public Integer getItemQuantityFound() {
+        String searchResultMsg = searchResultCounterLbl.getText();
+        String searchResultQuantity = searchResultMsg.substring(0, searchResultMsg.indexOf("results", 1) - 1);
+        System.out.println("Item quantity found: " + searchResultQuantity);
+        return Integer.valueOf(searchResultQuantity);
+    }
+
+    public String[] getItemListFoundByName() {
+        String[] itemList = new String[productList.size()];
+        System.out.println("List of items found:");
+        for (int i = 0; i < productList.size(); i++) {
+            itemList[i] = productList.get(i).getText();
+            System.out.println(" - " + itemList[i]);
+        }
+        return itemList;
     }
 
     public SearchPage quickAddToCart(Product product) {

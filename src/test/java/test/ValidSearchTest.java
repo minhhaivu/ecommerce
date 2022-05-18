@@ -8,14 +8,14 @@ import validation.SearchValidation;
 @Test
 public class ValidSearchTest {
     public void validSearch() {
-        String searchString = "Dress";
+        String searchItem = "Dress";
         HomePage homePage = new HomePage();
         SearchPage searchPage = new SearchPage();
-        SearchValidation searchValidation = new SearchValidation();
 
-        homePage.open().search(searchString);
-        searchValidation.checkSearchResultCountMsg();
-        searchValidation.checkSearchResultDetail(searchString);
+        homePage.open().search(searchItem);
+        SearchValidation.checkItemQuantityFound(searchPage.getItemQuantityFound(),
+                searchPage.getProductList().size());
+        SearchValidation.checkItemsFoundContain(searchPage.getItemListFoundByName(), searchItem);
 
         searchPage.close();
     }
