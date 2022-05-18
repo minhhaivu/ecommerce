@@ -3,9 +3,7 @@ package pages;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import pages.objects.Product;
 
 import java.util.List;
 
@@ -17,14 +15,13 @@ public class SearchPage extends AbstractPage {
     @FindBy(className = "heading-counter")
     private WebElement searchResultCounterLbl;
 
-    private WebElement productLocator(Product product) {
-        return pageDriver.findElement(By.xpath("//div[@class='product-container' and .//a[contains(text(),'"
-                + product.getName() + "')] and .//span[contains(text(),'" + product.getPrice() + "')]]"));
+    private WebElement addToCartLocatorByIndex(Integer index) {
+        return pageDriver.findElement(By.xpath("(//a[@title = 'Add to cart'])["
+                + index + "]"));
     }
 
-    private WebElement addToCartLocator(Product product) {
-        return pageDriver.findElement(By.xpath("//a[@title = 'Add to cart']//ancestor::div[@class='product-container' and .//a[contains(text(),'"
-                + product.getName() + "')] and .//span[contains(text(),'" + product.getPrice() + "')]]"));
+    private WebElement productLocatorByIndex(Integer index) {
+        return pageDriver.findElement(By.xpath("(//div[@class='product-container'])[" + index + "]"));
     }
 
     public SearchPage() {
@@ -48,11 +45,9 @@ public class SearchPage extends AbstractPage {
         return itemList;
     }
 
-    public SearchPage quickAddToCart(Product product) {
-        Actions action = new Actions(pageDriver);
-        action.moveToElement(productLocator(product));
-        addToCartLocator(product).click();
-
+    public SearchPage quickAddToCartByIndex(Integer productIndex) {
+        hoverMouse(productLocatorByIndex(productIndex));
+        addToCartLocatorByIndex(productIndex).click();
         return this;
     }
 }

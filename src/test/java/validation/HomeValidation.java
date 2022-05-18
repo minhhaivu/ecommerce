@@ -1,12 +1,10 @@
 package validation;
 
 import org.testng.Assert;
-import pages.HomePage;
 
 public class HomeValidation {
 
-    public void checkCartQuantity(Integer cartQuantity) {
-        HomePage homePage = new HomePage();
-        Assert.assertEquals(homePage.getCartQuantity(), cartQuantity.toString());
+    public static void checkCartQuantity(Integer actualQuantity, Integer expectedQuantity) {
+        Assert.assertEquals(actualQuantity, expectedQuantity);
     }
 }
