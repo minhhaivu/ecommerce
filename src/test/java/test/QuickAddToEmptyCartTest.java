@@ -1,17 +1,17 @@
 package test;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.AddToCartPage;
-import pages.CheckOutPage;
-import pages.HomePage;
-import pages.SearchPage;
+import pages.*;
 import validation.CheckOutValidation;
 import validation.HomeValidation;
+
+import java.util.Random;
 
 public class QuickAddToEmptyCartTest {
 
     @Test
-    public void addToEmptyCart() {
+    public void quickAddToEmptyCart() {
         String searchStr = "dress";
 
         HomePage homePage = new HomePage();
