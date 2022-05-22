@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
+import java.util.Random;
 
 @Getter
 public class SearchPage extends AbstractPage {
@@ -15,12 +16,16 @@ public class SearchPage extends AbstractPage {
     @FindBy(className = "heading-counter")
     private WebElement searchResultCounterLbl;
 
-    private WebElement addToCartLocatorByIndex(Integer index) {
+    private WebElement getQuickAddToCartButtonByIndex(Integer index) {
         return pageDriver.findElement(By.xpath("(//a[@title = 'Add to cart'])["
                 + index + "]"));
     }
 
-    private WebElement productLocatorByIndex(Integer index) {
+    private WebElement getProductNameLinkByIndex(Integer index) {
+        return pageDriver.findElement(By.xpath("(//div[@class='product-container'])[" + index + "]//h5/a"));
+    }
+
+    private WebElement getProductInfoContainerByIndex(Integer index) {
         return pageDriver.findElement(By.xpath("(//div[@class='product-container'])[" + index + "]"));
     }
 
@@ -46,8 +51,15 @@ public class SearchPage extends AbstractPage {
     }
 
     public SearchPage quickAddToCartByIndex(Integer productIndex) {
-        hoverMouse(productLocatorByIndex(productIndex));
-        addToCartLocatorByIndex(productIndex).click();
+        hoverMouse(getProductInfoContainerByIndex(productIndex));
+        getQuickAddToCartButtonByIndex(productIndex).click();
+        return this;
+    }
+
+    public SearchPage selectRandomProduct() {
+        Integer productIndex = new Random().nextInt(getItemQuantityFound()) + 1;
+        scrollInToView(getProductInfoContainerByIndex(productIndex));
+        getProductNameLinkByIndex(productIndex).click();
         return this;
     }
 }
