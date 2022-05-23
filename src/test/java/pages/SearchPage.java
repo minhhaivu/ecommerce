@@ -3,11 +3,10 @@ package pages;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import pages.objects.Product;
 
 import java.util.List;
+import java.util.Random;
 
 @Getter
 public class SearchPage extends AbstractPage {
@@ -17,14 +16,17 @@ public class SearchPage extends AbstractPage {
     @FindBy(className = "heading-counter")
     private WebElement searchResultCounterLbl;
 
-    private WebElement productLocator(Product product) {
-        return pageDriver.findElement(By.xpath("//div[@class='product-container' and .//a[contains(text(),'"
-                + product.getName() + "')] and .//span[contains(text(),'" + product.getPrice() + "')]]"));
+    private WebElement getQuickAddToCartButtonByIndex(Integer index) {
+        return pageDriver.findElement(By.xpath("(//a[@title = 'Add to cart'])["
+                + index + "]"));
     }
 
-    private WebElement addToCartLocator(Product product) {
-        return pageDriver.findElement(By.xpath("//a[@title = 'Add to cart']//ancestor::div[@class='product-container' and .//a[contains(text(),'"
-                + product.getName() + "')] and .//span[contains(text(),'" + product.getPrice() + "')]]"));
+    private WebElement getProductNameLinkByIndex(Integer index) {
+        return pageDriver.findElement(By.xpath("(//div[@class='product-container'])[" + index + "]//h5/a"));
+    }
+
+    private WebElement getProductInfoContainerByIndex(Integer index) {
+        return pageDriver.findElement(By.xpath("(//div[@class='product-container'])[" + index + "]"));
     }
 
     public SearchPage() {
@@ -48,11 +50,16 @@ public class SearchPage extends AbstractPage {
         return itemList;
     }
 
-    public SearchPage quickAddToCart(Product product) {
-        Actions action = new Actions(pageDriver);
-        action.moveToElement(productLocator(product));
-        addToCartLocator(product).click();
+    public SearchPage quickAddToCartByIndex(Integer productIndex) {
+        hoverMouse(getProductInfoContainerByIndex(productIndex));
+        getQuickAddToCartButtonByIndex(productIndex).click();
+        return this;
+    }
 
+    public SearchPage selectRandomProduct() {
+        Integer productIndex = new Random().nextInt(getItemQuantityFound()) + 1;
+        scrollInToView(getProductInfoContainerByIndex(productIndex));
+        getProductNameLinkByIndex(productIndex).click();
         return this;
     }
 }

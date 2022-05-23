@@ -5,7 +5,7 @@ import pages.CheckOutPage;
 
 public class CheckOutValidation {
 
-    public void checkOutPageOpened() {
+    public static void checkOutPageOpened() {
         CheckOutPage checkOutPage = new CheckOutPage();
         String checkOutPageTitle = checkOutPage.getPageDriver().getTitle();
         Assert.assertEquals(checkOutPageTitle, "Order - My Store",
