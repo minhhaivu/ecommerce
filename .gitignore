@@ -10,6 +10,8 @@ buildNumber.properties
 .mvn/timing.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
+.surefire-997CABBAEB3982CBD5182547A6580F0ABA81FE98
+allure-results/
 
 # Eclipse m2e generated files
 # Eclipse Core
@@ -48,6 +50,7 @@ hs_err_pid*
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+.idea/inspectionProfiles/
 
 # AWS User-specific
 .idea/**/aws.xml
@@ -81,6 +84,7 @@ cmake-build-*/
 
 # IntelliJ
 out/
+test-output/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/

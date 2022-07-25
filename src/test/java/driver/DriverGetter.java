@@ -5,17 +5,20 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import java.util.Objects;
 
 @Getter
 public class DriverGetter {
     private static WebDriver driver;
 
     public static WebDriver getDriver() {
-        if (Objects.isNull(driver)) {
+        if (driver==null) {
             driver = initDriver();
         }
         return driver;
+    }
+
+    public static void resetDriver() {
+        driver=null;
     }
 
     private static WebDriver initDriver() {

@@ -50,7 +50,7 @@ public class SearchPage extends AbstractPage {
         return itemList;
     }
 
-    public SearchPage quickAddToCartByIndex(Integer productIndex) {
+    public SearchPage quickAddToCart(Integer productIndex) {
         hoverMouse(getProductInfoContainerByIndex(productIndex));
         getQuickAddToCartButtonByIndex(productIndex).click();
         return this;

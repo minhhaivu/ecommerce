@@ -1,30 +1,28 @@
 package test;
 
-import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.*;
 import validation.CheckOutValidation;
 import validation.HomeValidation;
 
-import java.util.Random;
-
+@Listeners(listeners.CustomizedEmailableReporter.class)
 public class QuickAddToEmptyCartTest {
-
-    @Test
+    @Test(groups={"PS"})
     public void quickAddToEmptyCart() {
         String searchStr = "dress";
 
-        HomePage homePage = new HomePage();
+        System.out.println("Quick Add to cart with default color, size");
+        BasePage basePage = new BasePage();
         SearchPage searchPage = new SearchPage();
         AddToCartPage addToCartPage = new AddToCartPage();
-        CheckOutPage checkOutPage = new CheckOutPage();
 
-        homePage.open().search(searchStr);
-        searchPage.quickAddToCartByIndex(1);
+        basePage.open().search(searchStr);
+        searchPage.quickAddToCart(1);
         addToCartPage.proceedToCheckout();
-        HomeValidation.checkCartQuantity(homePage.getCartQuantity(), 1);
+        HomeValidation.checkCartQuantity(basePage.getCartQuantity(), 1);
         CheckOutValidation.checkOutPageOpened();
 
-        checkOutPage.close();
+        basePage.close();
     }
 }

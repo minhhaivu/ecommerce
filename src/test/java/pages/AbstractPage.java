@@ -23,6 +23,7 @@ public abstract class AbstractPage {
 
     public void close() {
         pageDriver.quit();
+        DriverGetter.resetDriver();
     }
 
     public void hoverMouse(WebElement element) {

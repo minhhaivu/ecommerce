@@ -1,21 +1,25 @@
 package test;
 
 import org.testng.Assert;
+import org.testng.annotations.CustomAttribute;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.*;
 import pages.objects.Cart;
 import pages.objects.Product;
 
+@Listeners(listeners.CustomizedEmailableReporter.class)
 public class AddToCartTest {
 
-    @Test
+    @Test(groups={"ST"},priority = 1,attributes = {@CustomAttribute(name = "priority",values = "")})
     public void addToCart() {
-        HomePage homePage = new HomePage();
+        System.out.println("Add To Cart with given quantity, size & color");
+        BasePage basePage = new BasePage();
         SearchPage searchPage = new SearchPage();
         AddToCartPage addToCartPage = new AddToCartPage();
         ProductInfoPage productInfoPage = new ProductInfoPage();
 
-        homePage.open().search("dress");
+        basePage.open().search("dress");
         searchPage.selectRandomProduct();
         productInfoPage.enterProductInfoAddToCart("M", 2);
         Product expectedProduct = productInfoPage.getAddedProduct();
