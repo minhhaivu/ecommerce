@@ -51,6 +51,7 @@ hs_err_pid*
 .idea/**/dictionaries
 .idea/**/shelf
 .idea/inspectionProfiles/
+.idea/vcs.xml
 
 # AWS User-specific
 .idea/**/aws.xml

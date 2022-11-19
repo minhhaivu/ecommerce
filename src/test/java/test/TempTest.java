@@ -12,7 +12,7 @@ public class TempTest {
             @CustomAttribute(name="ID",values = {"211183"}),
             @CustomAttribute(name="businessValue",values = {"5"})
     })
-    public void verifySignInWithValidAccount() {
+    public void verifyJenkins() {
         Reporter.log("Step 1: Open Home page.");
         Reporter.log("Step 2: Click SignIn button.");
         Reporter.log("Step 3: Enter a valid username & password.");
