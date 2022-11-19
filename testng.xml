@@ -6,7 +6,7 @@
     </listeners>
     <test name="SmokeTest" >
         <classes>
-            <class name="test.RunDefaultSuiteTest"/>
+            <class name="test.AddToCartTest"/>
         </classes>
     </test>
 </suite>

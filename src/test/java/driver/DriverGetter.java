@@ -4,25 +4,48 @@ import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.net.URL;
 
 @Getter
 public class DriverGetter {
     private static WebDriver driver;
+    private static ThreadLocal<RemoteWebDriver> remoteDriver=new ThreadLocal<>();
+    private static String executionType = "remote";
+
 
     public static WebDriver getDriver() {
-        if (driver==null) {
+        if (driver == null) {
             driver = initDriver();
         }
         return driver;
     }
 
     public static void resetDriver() {
-        driver=null;
+        driver = null;
+    }
+
+    public static ThreadLocal<RemoteWebDriver> getRemoteDriver() {
+        try {
+            ChromeOptions options = new ChromeOptions();
+            System.setProperty("webdriver.chrome.whitelistedIps", "");
+
+            RemoteWebDriver remote = new RemoteWebDriver(new URL("http://localhost:4445/"), options);
+            remoteDriver.set(remote);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return remoteDriver;
     }
 
     private static WebDriver initDriver() {
-        driver = new ChromeDriver(initChromeOptions());
+        switch (executionType) {
+            case "local":
+                driver = new ChromeDriver(initChromeOptions());
+            case "remote":
+                driver = getRemoteDriver().get();
+        }
         return driver;
     }
 
@@ -38,6 +61,7 @@ public class DriverGetter {
         options.setBinary(chromeHome);
         options.addArguments("start-maximized");
         System.setProperty("webdriver.chrome.driver", chromeDriver);
+        System.setProperty("webdriver.chrome.whitelistedIps", "");
 
         return options;
     }

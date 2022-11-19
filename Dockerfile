@@ -1,18 +1,9 @@
 # syntax=docker/dockerfile:1
 
 FROM eclipse-temurin:8-jdk
-
-WORKDIR /apps
-
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
-RUN ./mvnw dependency:resolve
-
-COPY src ./src
-COPY .jenkins/ .jenkins
-
-# Install Google Chrome
-ENV CHROME_VERSION "google-chrome-stable"
+EXPOSE 8080
+ADD ./target/test-classes/test/AddToCartTest.class AddToCartTest.class
+ENTRYPOINT ["java","-jar","AddToCartTest.class"]
 
 RUN sed -i -- 's&deb http://deb.debian.org/debian jessie-updates main&#deb http://deb.debian.org/debian jessie-updates main&g' /etc/apt/sources.list && \
   apt-get update && apt-get install wget -y && \
@@ -34,6 +25,3 @@ RUN CHROMEDRIVER_VERSION=`curl -sS chromedriver.storage.googleapis.com/LATEST_RE
     chmod +x /apps/chromedriver-$CHROMEDRIVER_VERSION/chromedriver && \
     ln -fs /apps/chromedriver-$CHROMEDRIVER_VERSION/chromedriver /usr/local/bin/chromedriver
 ENV CHROME_DRIVER "/usr/local/bin/google-chrome-stable"
-
-# Run test
-CMD ["./mvnw", "test"]
